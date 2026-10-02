@@ -246,6 +246,10 @@ Fast structural pass — these were already working and still apply.
 
 ## Scope guard
 
+**No repo access required.** This is a Product checklist end to end — it asks you to
+verify no code. Where a claim about the system is involved, the check is that the card
+does not make one (G5, G8). Engineering validates engineering claims.
+
 Flag only what **Product** owns.
 
 Engineering owns — and you must **not** flag — which component or library to use, where a
