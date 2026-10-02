@@ -317,6 +317,26 @@ Name the card this duplicates, depends on, or reverses.
 A card that silently undoes a shipped decision needs that decision named, so the reversal
 is deliberate rather than accidental.
 
+### G20 · Decision not recorded at Feature level — GAP
+
+A decision that affects more than this one card belongs in the **parent Feature's PRD** —
+not in a card comment, and not only in the AC of whichever story happened to surface it.
+
+This is the check that stops the same question being asked three times. Where a decision
+was settled once on a sibling card and never written up, the next story re-opens it, and
+the dev asks again.
+
+- **BAD** — the refund basis is argued out in comments on one story; two sibling stories
+  later ask the same question.
+- **GOOD** — the ruling lands in the Feature's PRD under a dated decision entry, and the
+  card's AC states the outcome and links the PRD section.
+
+Flag when: the card settles something its siblings depend on, and nothing in the parent
+Feature or its PRD records it. Name the Feature and the decision that needs writing up.
+
+**One edit, one place.** Do not mirror the decision text across cards — the card states the
+outcome and links the PRD; the PRD holds the reasoning.
+
 ---
 
 ## Baseline card hygiene
@@ -405,8 +425,13 @@ team-level habit worth naming, not six separate findings.
 - If a card passes everything, say so plainly and endorse. Do not manufacture findings.
 
 - **Never ask what the card already answers.** Re-raising a settled point is the fastest
-  way to get this checklist ignored. Read the description, every AC, and the comments
-  before flagging — if the answer is there, it is not a finding.
-- **Check the sibling cards first.** Many of these questions were answered once on a
-  sibling and never written down, so they get re-asked. If a sibling settled it, cite that
-  card rather than reopening it.
+  way to get this checklist ignored.
+- **Resolution order — work it before flagging anything.** A question is only a finding if
+  it survives all four:
+  1. **This card** — description, every AC, and the comments.
+  2. **Sibling cards** under the same parent Feature.
+  3. **The parent Feature** — its description and its own decisions.
+  4. **The PRD** linked from the Feature — the canonical source of truth.
+
+  If any of them answers it, cite that source instead of raising it. If the answer exists
+  only in a card comment, that is G20: the decision needs writing up at Feature level.

@@ -75,13 +75,19 @@ Seven further checks from a parallel refinement review (Oct 2026):
 | G17 | Cascade on change or delete unstated | GAP |
 | G18 | Mockup contradicts the ACs | BLOCKER |
 | G19 | Overlap or reversal with another card | GAP |
+| G20 | Decision not recorded at Feature level | GAP |
 
 Plus the **silent-decision test**, applied to every AC:
 
 > Is there a call here a developer would have to make on their own?
 
 And one rule that keeps the agent usable: **it must never ask what the card already
-answers.** Re-raising a settled point is the fastest way to get a checklist ignored.
+answers.** Before raising anything it works a fixed resolution order — this card, then
+sibling cards, then the parent Feature, then the Feature's PRD. A question is only a
+finding if it survives all four.
+
+Decisions live at **Feature level, in the PRD**. A ruling that stays in a card comment
+gets re-asked on the next sibling story — that is check G20.
 
 ## Scope guard
 
