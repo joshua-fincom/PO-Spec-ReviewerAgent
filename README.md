@@ -64,9 +64,24 @@ number of gaps. The timing is the mechanism.
 | G11 | Regression risk unflagged | GAP | 8 gaps / 8 cards |
 | G12 | Accessibility unstated | POLISH | 4 gaps / 4 cards |
 
+Seven further checks from a parallel refinement review (Oct 2026):
+
+| | Check | Severity |
+|---|---|---|
+| G13 | Data provenance unstated | BLOCKER |
+| G14 | Fail-open vs fail-safe undecided | BLOCKER |
+| G15 | Money formula without a worked example | BLOCKER |
+| G16 | Existing records unaddressed | BLOCKER |
+| G17 | Cascade on change or delete unstated | GAP |
+| G18 | Mockup contradicts the ACs | BLOCKER |
+| G19 | Overlap or reversal with another card | GAP |
+
 Plus the **silent-decision test**, applied to every AC:
 
 > Is there a call here a developer would have to make on their own?
+
+And one rule that keeps the agent usable: **it must never ask what the card already
+answers.** Re-raising a settled point is the fastest way to get a checklist ignored.
 
 ## Scope guard
 

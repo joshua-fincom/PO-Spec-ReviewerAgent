@@ -74,6 +74,10 @@ Ordered by how often they actually bit. **BLOCKER** = the dev stops or guesses w
 Every value a user or another system sees is pinned: verbatim string, format, timezone,
 units, enum members, and what an out-of-range value does.
 
+Copy counts as a value. Give the **final text** for banners, tooltips, error messages and
+status labels — and say whether it is final or still waiting on Legal/Compliance
+(MP-15376, MP-15561, MP-14784, MP-14711, MP-16102).
+
 - **BAD** — "shows a sensible value or is hidden if unknown" (MP-15884). The field was
   typed `number | string | null`; `""` rendered "0%", `true` rendered "1%", and the ratio
   `0.98` rendered "1%".
@@ -86,8 +90,13 @@ units, enum members, and what an out-of-range value does.
 ### G2 · Cross-surface parity unstated — BLOCKER
 *38 gaps / 27 cards*
 
-Name **every** surface the rule applies to. A rule stated for one screen will be built for
-that screen only.
+Name **every** surface the rule applies to, and say what is **out** of scope. A rule
+stated for one screen will be built for that screen only.
+
+Ask it three ways: does this also apply to Seller or Admin views? To Home? To *every*
+password field? And if backend work is missing, is it in this card, a split-out ticket, or
+a sibling — **name the ticket** (MP-16156, MP-15884, MP-15878, MP-14890, MP-15103,
+MP-14883, MP-15472, MP-13761).
 
 - **BAD** — "the Sign up page" (MP-16170). Sign up has three view branches (form / OTP /
   password) on different templates. MP-15116 exists precisely because a link vanished on
@@ -162,7 +171,12 @@ State the side-effects and the adjacent transitions, not just the happy one.
 ### G7 · Boundary / threshold value missing — GAP
 *21 gaps / 16 cards*
 
-Exact cutoffs, inclusive or exclusive, tie-breaks, and the degenerate case.
+Exact cutoffs, inclusive or exclusive, tie-breaks, and the degenerate case. Also the
+plain limits: max list size, CSV size cap, smallest supported phone width, password
+length, retention periods — final figures, not "TBC".
+
+Business terms get definitions too. "Fastest to ship" is a formula, not an adjective
+(MP-14862, MP-15561, MP-14888, MP-15463, MP-15879, MP-15816).
 
 - **BAD** — ">= 24 hours" (MP-16080): what does *exactly* 24h do? A single-day range? A
   breached, negative duration?
@@ -192,6 +206,11 @@ that system behaves — that assertion is the dev's to make.
 What happens on failure, and how does support see it? When the card is quiet, silently
 dropping user input is the default outcome.
 
+Cover the three screen states explicitly: an **empty** list, a **zero** value (is 0% a real
+zero or "no data"? — they look identical and mean opposite things), and a **partial
+failure** where one source fails while the others load (MP-15884, MP-14716, MP-15877,
+MP-14851, MP-15085).
+
 ### G10 · Idempotency / retry undefined — GAP
 *9 gaps / 9 cards*
 
@@ -212,6 +231,94 @@ screen-reader behaviour for anything conditionally hidden.
 
 ---
 
+## Refinement checks (from Charm's card review, Oct 2026)
+
+Seven checks the 298-card retrospective did not surface, drawn from a parallel review of
+refinement questions. Same severity scale.
+
+### G13 · Data provenance unstated — BLOCKER
+
+Every number, badge, chip, tab and label on the screen has a stated source of truth. Where
+the data does not exist yet, **the card makes the product call: build it, hide the element,
+or show a defined placeholder.**
+
+This is not a request to name fields or APIs — that stays with engineering (G5). The PO
+owes the *decision* about what the user sees when the data isn't there.
+
+- **BAD** — a "Reply Rate" stat with no backend field behind it (MP-15884).
+- **BAD** — chips with no data source (MP-15374); a Promotions tab with nothing to show
+  (MP-15877).
+- **GOOD** — "Reply Rate shows only where we hold a figure. Where we don't, the whole row
+  is absent — not 0%, not a dash."
+
+### G14 · Fail-open vs fail-safe undecided — BLOCKER
+
+When the system **cannot tell**, the card says which way it falls.
+
+- **BAD** — if the mini-app can't detect it is inside GCash, is the phone field editable
+  or read-only? (MP-15472, MP-15475). Left open, the dev picks — and "editable" quietly
+  becomes an account-takeover path.
+- **GOOD** — "Cannot confirm GCash context → treat as outside GCash; field stays editable
+  and identity is re-verified." Or the reverse, stated.
+
+State it for any detection, entitlement, permission or feature-flag check that can return
+"unknown".
+
+### G15 · Money formula without a worked example — BLOCKER
+
+Any card touching money carries the formula **and one worked example with real numbers**.
+
+Answer explicitly: does a refund use what the buyer actually paid or the list price? Is
+commission taken on gross or net? What happens if the seller was already paid out?
+
+- Examples: MP-15701, MP-16156, MP-13693, MP-12911.
+- **GOOD** — "Buyer paid ₱450 (₱500 less a ₱50 platform voucher). Refund = ₱450. Commission
+  reverses on ₱450, not ₱500. Seller already paid out → wallet adjustment, not a payout
+  reversal."
+
+A money AC without arithmetic someone can check is not reviewable.
+
+### G16 · Existing records unaddressed — BLOCKER
+
+Say what happens to records that already exist: open orders, live chats, issued tokens,
+partners already connected, rows already written.
+
+State explicitly whether production data is backfilled, migrated, or left as-is — and if
+left as-is, what those users see.
+
+- Examples: MP-15063, MP-15059, MP-14743, MP-14910.
+
+### G17 · Cascade on change or delete unstated — GAP
+
+What happens to related things when this one changes or is removed?
+
+- **BAD** — can a group be deleted while a live voucher still uses it? (MP-14876)
+- **BAD** — do delisted members warn, or block? (MP-14862)
+- **GOOD** — name the blocked case, the warned case, and the silently-allowed case.
+
+### G18 · Mockup contradicts the ACs — BLOCKER
+
+The design and the acceptance criteria must say the same thing. Where they differ, the
+card is not ready — and the AC wins unless the card says otherwise.
+
+- MP-15371 — popup in the design, multi-select in the criteria.
+- MP-15373 — six chips in the mockup, three in the criteria; the title says "filters"
+  while the criteria say "chips".
+
+Check the labels too, not just the layout.
+
+### G19 · Overlap or reversal with another card — GAP
+
+Name the card this duplicates, depends on, or reverses.
+
+- MP-15875 may already be fixed by MP-14920.
+- MP-15083 reverses MP-13768.
+
+A card that silently undoes a shipped decision needs that decision named, so the reversal
+is deliberate rather than accidental.
+
+---
+
 ## Baseline card hygiene
 
 Fast structural pass — these were already working and still apply.
@@ -222,11 +329,13 @@ Fast structural pass — these were already working and still apply.
 - [ ] Any recommendation stated in prose is **locked into an AC** — half-decided reads as undecided
 - [ ] Money / credit / voucher actions define cancel, refund or reversal, not just the "do"
 - [ ] Compliance items name an owner **and** a date, never just "confirm with Legal"
+- [ ] Where Legal / DPO / Compliance sign-off is required, it is **done** — not merely assigned (MP-14702, MP-14710, MP-14910, MP-15816)
 - [ ] An open decision on the parent Feature/Epic is flagged at the parent, naming the affected children
 
 **Permissions**
 - [ ] Required role or permission identified, or marked N/A
 - [ ] Behaviour when unauthorised is defined — hide / disable / redirect / 403
+- [ ] **Ownership named** — who maintains this list, setting or report once it ships, not just who may change it
 
 **Structure**
 - [ ] Parent Feature linked; Feature has a PRD link where the feature is non-trivial
@@ -294,3 +403,10 @@ team-level habit worth naming, not six separate findings.
 - Shipped or closed cards are frozen: capture a delta as a follow-up card, never a
   rewritten AC.
 - If a card passes everything, say so plainly and endorse. Do not manufacture findings.
+
+- **Never ask what the card already answers.** Re-raising a settled point is the fastest
+  way to get this checklist ignored. Read the description, every AC, and the comments
+  before flagging — if the answer is there, it is not a finding.
+- **Check the sibling cards first.** Many of these questions were answered once on a
+  sibling and never written down, so they get re-asked. If a sibling settled it, cite that
+  card rather than reopening it.
