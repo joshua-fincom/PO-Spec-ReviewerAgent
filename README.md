@@ -22,6 +22,12 @@ is complete, and the visible back-and-forth is only the surface of the cost.
 Every check in the agent carries the count of real dev-raised gaps behind it. None were
 invented from best-practice lists.
 
+## Start here
+
+1. **[TEAM-PROTOCOL.md](TEAM-PROTOCOL.md)** — where decisions live, and why. Read this
+   first; the checklist only works if the protocol holds.
+2. `card-quality-reviewer.md` — the agent itself. Install as below.
+
 ## Install
 
 Drop `card-quality-reviewer.md` into your bot's agents directory:
