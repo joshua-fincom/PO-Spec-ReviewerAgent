@@ -60,8 +60,9 @@ after a dev picks it up has already cost the back-and-forth it was meant to prev
 
 ## For developers
 
-**Read the Feature's PRD before raising a question on a card.** If the answer is there, the
-card is the thing that needs updating, not the PO's time.
+**Read the Feature's PRD before raising a question on a card.** If the answer is already
+there, say so in the thread and ask the PO to link it from the card. That is a one-line
+fix — not a decision that needs re-making.
 
 **When a decision gets made in a card thread — point it back to the Feature.** A ruling
 that stays in a comment is lost to every sibling card. Ask the PO to write it into the PRD,
