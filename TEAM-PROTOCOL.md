@@ -29,6 +29,19 @@ Writing it once at Feature level means every sibling card inherits it.
 3. Do **not** paste the reasoning into the card, and do not mirror it across sibling
    cards. One edit, one place — otherwise the copies drift and nobody knows which is live.
 
+**Then tell the devs it happened.** A PRD edit is silent — nobody watches Confluence. Post
+**one comment on the parent Feature**:
+
+- one line saying what was decided
+- a link to the PRD section holding the reasoning
+- an @-mention of the assignees on the affected child cards
+
+One comment on the Feature, not one per child. Do not rewrite the children's descriptions,
+and do not paste the reasoning into the comment — it links, it does not duplicate.
+
+If the ruling changes what a specific card must now do, update **that card's AC** to the
+new outcome. That is the only place the outcome gets restated, and it still links the PRD.
+
 **When you hit a question while drafting**, work this order before raising it:
 
 | | Look here |

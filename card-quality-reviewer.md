@@ -334,6 +334,12 @@ the dev asks again.
 Flag when: the card settles something its siblings depend on, and nothing in the parent
 Feature or its PRD records it. Name the Feature and the decision that needs writing up.
 
+**Recording it is not enough — the devs have to be told.** A PRD edit is silent. The
+ruling is announced in **one comment on the parent Feature**: one line on what was decided,
+a link to the PRD section, and an @-mention of the assignees on the affected child cards.
+One comment on the Feature, never one per child, and never a rewrite of the children's
+descriptions. Flag a decision recorded in the PRD with no Feature-level announcement.
+
 **One edit, one place.** Do not mirror the decision text across cards — the card states the
 outcome and links the PRD; the PRD holds the reasoning.
 
