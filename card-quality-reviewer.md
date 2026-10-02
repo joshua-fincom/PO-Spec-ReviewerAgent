@@ -121,21 +121,32 @@ read, display, label, filter and parity too.
   the 14 concerns in MP-15583 were lost exactly that way.
 - **GOOD** — state who is refused, on what, and what they see when they try.
 
-### G5 · Code-reality claim unverified — BLOCKER
+### G5 · Mechanism prescribed instead of outcome — BLOCKER
 *81 of 298 cards (27%)*
 
-"Reuse the existing X", "already handled by Y", "per the platform standard", "field Z
-exists" — all **load-bearing**. Verify before it reaches an AC, or mark it explicitly as
-an unverified hypothesis so the dev treats it as a suggestion, not a contract.
+The card states **what must be true for the buyer or seller**. It does not state how to
+build it. Any "reuse the existing X", "already handled by Y", "per the platform standard"
+or a named field / component / role code is an **engineering claim** — cut it, or mark it
+explicitly as a non-binding hint the dev validates and may reject.
+
+A wrong hint is worse than no hint: the dev reads it as the contract and spends a research
+cycle disproving it before writing any code. That happened on 27% of cards.
+
+**The test — strip every proper noun that names a file, field, component, repo or role
+code. Does the AC still say what must be true?** If not, it was prescribing mechanism.
 
 - **BAD** — "this repo already has a directly reusable pattern… build the same way"
-  (MP-16215). Wrong host — that script exists for LLM error classification.
-- **BAD** — "reuse, don't re-fetch" (MP-16199). The grid lives in a client-side-only
-  nested route, never in the SSR HTML for the crawled URL.
-- **BAD** — `mpn` named in an AC (MP-16198). Does not exist anywhere in the API.
-- **BAD** — "supervisor" (MP-16401). No such role code exists.
-- **GOOD** — "Reuse `UDropdownMenu` (verified: `app/pages/store/[handle].vue`)" or
-  "Assumed reusable — dev to confirm; raise before building if not."
+  (MP-16215). **GOOD** — "This check runs on a schedule and raises an alert when the
+  sitemap count drops. Dev picks the host."
+- **BAD** — "reuse, don't re-fetch" the product grid (MP-16199). **GOOD** — "A crawler
+  requesting the seller's page sees the product list in the response."
+- **BAD** — naming `mpn` as the field to populate (MP-16198). **GOOD** — "Where we hold a
+  manufacturer part number, Google receives it; dev confirms whether we hold one."
+- **BAD** — "supervisor" as a role code (MP-16401). **GOOD** — "A user who oversees a
+  team can act on their team's cases" — dev maps that to the permission model.
+
+Engineering validates engineering claims. The PO's job is to make sure none are in the
+card to begin with.
 
 ### G6 · State / lifecycle side-effects undefined — GAP
 *24 gaps / 19 cards*
@@ -159,15 +170,21 @@ Exact cutoffs, inclusive or exclusive, tie-breaks, and the degenerate case.
   boundary)" (MP-15379).
 - Include the smallest supported viewport (320px) when layout is in scope.
 
-### G8 · Integration assumption unverified — GAP
-*23 gaps / 20 cards*
+### G8 · Dependency outcome unstated — GAP
+*23 gaps across 20 cards*
 
-Where the card depends on another system's behaviour, say what was verified and when.
+Where the card depends on another system or on existing behaviour, state **what the user
+must experience** and name the dependency so engineering can verify it. Do not assert how
+that system behaves — that assertion is the dev's to make.
 
-- **BAD** — "by any other means" (MP-16401): the bulk-resolve route sat outside the
-  per-ticket guard.
-- **BAD** — "opens the same Help Center page as today" (MP-16170): those flows open a new
-  tab *on purpose*, because same-tab navigation discards the pending OTP held in memory.
+- **BAD** — "opens the same Help Center page as today" (MP-16170). That flow deliberately
+  opens a new tab, because same-tab navigation discards the pending OTP held in memory.
+  The card asserted a behaviour it hadn't checked.
+- **GOOD** — "A buyer mid-signup who opens help does not lose their progress. Depends on
+  the signup flow — dev to confirm the handling."
+- **BAD** — "by any other means" (MP-16401), which silently assumed every route was
+  guarded. **GOOD** — name the outcome ("no path lets an agent resolve a teammate's
+  case") and let dev enumerate the routes.
 
 ### G9 · Reliability / supportability unstated — GAP
 *10 gaps / 9 cards*

@@ -13,7 +13,7 @@ Q4 2026 / Q1 2027 initiatives (October 2026).
 | Cards carrying a dev-written preflight pass that found product gaps | **57%** |
 | Product gaps per card, where tabulated | **9.5** |
 | Gaps decided by engineering and never escalated to Product | **80%** |
-| Cards asserting a reuse/existence claim the dev had to disprove | **27%** |
+| Cards prescribing a mechanism the dev had to disprove | **27%** |
 
 The 80% is the important one. Most gaps never arrive as a question — a developer simply
 picks an answer and moves on. So "no open questions on the card" is not evidence the card
@@ -55,10 +55,10 @@ number of gaps. The timing is the mechanism.
 | G2 | Cross-surface parity unstated | BLOCKER | 38 gaps / 27 cards |
 | G3 | Ambiguous term / quantifier | BLOCKER | 37 gaps / 23 cards |
 | G4 | Negative path missing | BLOCKER | 28 gaps / 27 cards |
-| G5 | Code-reality claim unverified | BLOCKER | 81 cards (27%) |
+| G5 | Mechanism prescribed instead of outcome | BLOCKER | 81 cards (27%) |
 | G6 | State / lifecycle side-effects undefined | GAP | 24 gaps / 19 cards |
 | G7 | Boundary / threshold value missing | GAP | 21 gaps / 16 cards |
-| G8 | Integration assumption unverified | GAP | 23 gaps / 20 cards |
+| G8 | Dependency outcome unstated | GAP | 23 gaps / 20 cards |
 | G9 | Reliability / supportability unstated | GAP | 10 gaps / 9 cards |
 | G10 | Idempotency / retry undefined | GAP | 9 gaps / 9 cards |
 | G11 | Regression risk unflagged | GAP | 8 gaps / 8 cards |
@@ -69,6 +69,10 @@ Plus the **silent-decision test**, applied to every AC:
 > Is there a call here a developer would have to make on their own?
 
 ## Scope guard
+
+**No repo access required.** This is a Product checklist end to end — it asks the PO to
+verify no code. Where a claim about the system is involved, the check is that the card
+does not make one. Engineering validates engineering claims.
 
 The agent flags only what Product owns. Which component, which library, where a file goes,
 how to split cards, branch strategy — engineering's calls, deliberately never flagged.
