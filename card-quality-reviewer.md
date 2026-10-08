@@ -451,8 +451,11 @@ Fast structural pass — these were already working and still apply.
 - [ ] **Ownership named** — who maintains this list, setting or report once it ships, not just who may change it
 
 **Structure**
-- [ ] Parent Feature linked; Feature has a PRD link where the feature is non-trivial
+- [ ] Parent Feature linked — or, if the card is genuinely standalone (no Feature), the
+      title carries the **`[IND]`** prefix and no false parent is forced
+- [ ] **Every Feature has a PRD link — no exceptions**
 - [ ] Title format: Story/Task `[System][Module] Description` (double bracket);
+      standalone Story/Task `[IND] [System][Module] Description`;
       Feature `[System] — Feature Name` (single bracket + dash)
 - [ ] Story has a narrative: "As a `<role>`, I want `<capability>`, so that `<benefit>`"
 - [ ] ACs in Given/When/Then, minimum 2, at least one covering an error or edge case
@@ -461,6 +464,11 @@ Fast structural pass — these were already working and still apply.
       `Blocks` / `is blocked by` point the right way
 
 **Design**
+- [ ] **Every Feature has the mockup HTML prototype file attached at Feature level** (the
+      file itself, not only a link)
+- [ ] **Design spec written in the PRD, and every applicable User Story explains its own
+      slice of it in-ticket** (not just a Figma link) — the PRD stays canonical; the story
+      explains only what it builds, no full mirror
 - [ ] Specific Figma frame linked (not the whole file), or marked N/A for backend
 - [ ] Empty, loading and error states designed or specified
 
