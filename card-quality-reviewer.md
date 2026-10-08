@@ -345,6 +345,93 @@ outcome and links the PRD; the PRD holds the reasoning.
 
 ---
 
+## Readiness checks (from Sprint 31 Dev & QA retrospective, Oct 2026)
+
+Five checks drawn from a parallel retrospective of **12 Dev and QA respondents**. These are
+not spec-content gaps — the card can be perfectly written and still fail them. They catch
+the readiness, verifiability and scope failures that the 298-card review did not measure.
+
+**The boundary — PO calls only.** The retro asked Product to own deployment and test setup,
+but most of that is an **engineering and QA** job (G5 still holds). These checks are trimmed
+to the slice a PO can answer **without a developer**: whether activation has a *product*
+owner (G21), whether an AC is verifiable in business terms (G22), and whether a bug states
+the correct behaviour and is real (G23). Enumerating migrations, env vars, keys, seed
+scripts, test environments, fixtures or automation is a **dev-preflight / QA** job — it
+lives in tech review and the `Blocked – Env/Ops` process, **not this gate.** The test:
+*could the PO answer this without a developer?* If no, it does not belong here.
+
+### G21 · Activation ownership unnamed — BLOCKER
+
+Retro context: **47% of "rework" was correct, merged code that was never made live** —
+blocked on an activation step no one owned. Most of the fix is a dev-preflight job.
+**Enumerating migrations, env vars, keys and seed scripts is an engineering call, not a PO
+call (G5).** The PO owns one narrow slice:
+
+- **Does the card assume the feature is live the moment code merges?** If it ships behind a
+  toggle (per the Feature DoR) or needs a **product precondition** before launch (content
+  seeded, legal copy final, a config row a non-dev owns), the card names **who turns it on**
+  and that precondition.
+- The PO does **not** list the technical prerequisites. Flag only that the **product
+  activation owner is missing** — never try to specify what the technical prerequisite is.
+- **GOOD** — "Launches when the category seed is reloaded (owner: Benjo) and the ToS copy is
+  final (owner: JB); ships behind a toggle — dev owns the toggle mechanics."
+- **BAD (for a PO)** — listing which DB migrations or env vars are needed. That's the dev's
+  preflight, not this gate.
+
+### G22 · Not verifiable as written — BLOCKER
+
+Some cards are clear enough to **build** but not to **verify**. The PO slice is **product**,
+not QA setup: the AC states an **observable outcome**, and names the **role and data
+precondition in business terms** — "a seller with a delivered order", "a buyer who has
+never signed in". That is what makes a card verifiable in principle.
+
+- Environments, test accounts, credentials, devices, fixtures, and manual-vs-automation are
+  **QA's call** — do **not** flag their absence on the card.
+- Flag only when an AC has **no observable result**, or names a role/data state in terms
+  only a developer could resolve.
+- **GOOD** — "Given a seller with at least one order in a returned state, when they open
+  Returns, then the Refund button is enabled and the amount equals the buyer-paid total
+  (G15)."
+
+### G23 · Bug not validated — BLOCKER *(bugs only)*
+
+The PO slice on a bug card is the **product** half:
+
+- It names the **expected (correct) behaviour** — the business rule being violated — not
+  just "it's wrong."
+- It passes the **reality check** before Developing: does the behaviour still exist (may
+  already be fixed)? Is it a defect or by design? Does the referenced state/enum/data source
+  actually exist, and does production carry status values the card didn't list? Is there
+  already a card?
+- Build numbers, logs, environment captures and repro evidence are the **reporter's / QA's**
+  to supply — do not block a PO's card on them. Steps the PO actually observed are welcome;
+  technical evidence is not the PO's to produce.
+- **BAD** — "refund amount is wrong", with no statement of what the correct amount should be
+  and no reality check. **GOOD** — the expected figure derived from the money formula (G15),
+  confirmed still reproducing.
+
+### G24 · Scope protection — GAP
+
+The card contains **one coherent requirement or defect**, not a running list of findings
+added during implementation.
+
+New or unrelated findings discovered during build or testing become **their own card** —
+they do not expand the original scope. Flag a card that has accreted unrelated ACs mid-flight.
+
+### G25 · Source-of-truth conflict unresolved — GAP
+
+Generalises G18 beyond mockup-vs-AC. When **Jira, Figma, the PRD, and sibling cards** say
+different things, the card names **which source wins**. And the card's own description/AC
+reflects the **current** decision — a ruling made in comments, a meeting, or a sibling card
+is not live until the AC is updated to match it (then G20 records it at Feature level).
+
+- **BAD** — the AC still says the old behaviour; the real decision lives three comments
+  down. Dev and QA build different versions.
+- **GOOD** — the AC carries the current rule; the comment says "AC updated per the 2026-10-02
+  ruling, see PRD §4," not the ruling itself.
+
+---
+
 ## Baseline card hygiene
 
 Fast structural pass — these were already working and still apply.
@@ -390,6 +477,13 @@ Flag only what **Product** owns.
 Engineering owns — and you must **not** flag — which component or library to use, where a
 file goes, how to split cards, branch strategy, and deploy mechanics. Sending a PO to
 chase those wastes their time and trains them to ignore you.
+
+**On the readiness checks (G21–G23):** these are trimmed to the PO-answerable slice only.
+The PO flags a missing *product* activation owner (G21), an AC with no observable business
+outcome (G22), or a bug that doesn't state the correct behaviour or isn't real (G23). The
+PO never enumerates migrations, env vars, keys, seed scripts, test environments, fixtures,
+or automation — those are dev-preflight and QA calls. The test stays: *could the PO answer
+this without a developer?* If no, it isn't on this gate.
 
 The test: *could the PO answer this without a developer?* If no, it isn't a product gap.
 
